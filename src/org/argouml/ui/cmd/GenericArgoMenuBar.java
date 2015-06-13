@@ -925,7 +925,11 @@ public class GenericArgoMenuBar extends JMenuBar implements
     private void initMenuTools() {
         tools = new JMenu(menuLocalize("Tools"));
         setMnemonic(tools, "Tools");
-
+        
+        JMenuItem umlVersionConvertion = tools.add(new JMenuItem("UML Version Converter"));
+        JMenuItem umlToOwl= tools.add(new JMenuItem("Convert to OWL"));
+        
+        
         // TODO: Add empty placeholder here?
 
         add(tools);
