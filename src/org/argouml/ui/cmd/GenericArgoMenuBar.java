@@ -39,8 +39,11 @@
 
 package org.argouml.ui.cmd;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,6 +52,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -56,13 +60,17 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.argouml.application.helpers.ResourceLoaderWrapper;
 import org.argouml.cognitive.critics.ui.ActionOpenCritics;
 import org.argouml.cognitive.ui.ActionAutoCritique;
 import org.argouml.cognitive.ui.ActionOpenDecisions;
 import org.argouml.cognitive.ui.ActionOpenGoals;
+import org.argouml.configuration.Configuration;
 import org.argouml.i18n.Translator;
+import org.argouml.persistence.PersistenceManager;
+import org.argouml.persistence.ProjectFileView;
 import org.argouml.ui.ActionExportXMI;
 import org.argouml.ui.ActionImportXMI;
 import org.argouml.ui.ActionProjectSettings;
@@ -94,12 +102,14 @@ import org.argouml.uml.ui.ActionSaveProjectAs;
 import org.argouml.uml.ui.ActionSequenceDiagram;
 import org.argouml.uml.ui.ActionStateDiagram;
 import org.argouml.uml.ui.ActionUseCaseDiagram;
+import org.argouml.util.ArgoFrame;
 import org.argouml.util.osdep.OSXAdapter;
 import org.argouml.util.osdep.OsUtil;
 import org.tigris.gef.base.AlignAction;
 import org.tigris.gef.base.DistributeAction;
 import org.tigris.gef.base.ReorderAction;
 import org.tigris.toolbar.ToolBarFactory;
+import org.uwl2owl.Converter;
 
 /**
  * GenericArgoMenuBar defines the menu bar for all operating systems which do
@@ -366,7 +376,16 @@ public class GenericArgoMenuBar extends JMenuBar implements
                 ShortcutMgr.ACTION_IMPORT_XMI);
         ShortcutMgr.assignAccelerator(file.add(new ActionExportXMI()),
                 ShortcutMgr.ACTION_EXPORT_XMI);
-
+        
+        JMenuItem saveasOWL = new JMenuItem("Export OWL...");
+        file.add(saveasOWL);
+        saveasOWL.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e) {
+                saveConvertowl();
+            }
+        });
+        
         JMenuItem importFromSources = file.add(ActionImportFromSources
                 .getInstance());
         setMnemonic(importFromSources, "Import");
@@ -926,9 +945,19 @@ public class GenericArgoMenuBar extends JMenuBar implements
         tools = new JMenu(menuLocalize("Tools"));
         setMnemonic(tools, "Tools");
         
-        JMenuItem umlVersionConvertion = tools.add(new JMenuItem("UML Version Converter"));
+//        JMenuItem umlVersionConvertion = tools.add(new JMenuItem("UML Version Converter"));
         JMenuItem umlToOwl= tools.add(new JMenuItem("Convert to OWL"));
-        
+        umlToOwl.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e) {
+                // TODO: Auto-generated method stub
+                Converter main = new Converter();
+//                main.httpConn();
+                File tempFile = main.createAndShowFileChoose();
+                main.httpConn(tempFile);
+                
+            }
+        });
         
         // TODO: Add empty placeholder here?
 
@@ -970,6 +999,48 @@ public class GenericArgoMenuBar extends JMenuBar implements
         add(help);
     }
 
+    private void saveConvertowl() {
+        File theFile = null;
+        // TODO: Auto-generated method stub
+        PersistenceManager pm = PersistenceManager.getInstance();
+        // show a chooser dialog for the file name, only xmi is allowed
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Save to OWL");
+        chooser.setFileView(ProjectFileView.getInstance());
+        chooser.setApproveButtonText("Save");
+        chooser.setAcceptAllFileFilterUsed(true);
+//      pm.setXmiFileChooserFilter(chooser);
+        chooser.setFileFilter(new FileNameExtensionFilter("Ontology Web Language (.owl)", ".owl"));
+        
+        String fn =
+            Configuration.getString(
+                PersistenceManager.KEY_PROJECT_NAME_PATH);
+        if (fn.length() > 0) {
+            fn = PersistenceManager.getInstance().getBaseName(fn);
+            chooser.setSelectedFile(new File(fn));
+        }
+
+        int result = chooser.showSaveDialog(ArgoFrame.getFrame());
+        if (result == JFileChooser.APPROVE_OPTION) {
+            theFile = chooser.getSelectedFile();
+            if (theFile != null) {
+                String name = theFile.getName();
+                Configuration.setString(
+                        PersistenceManager.KEY_PROJECT_NAME_PATH,
+                        PersistenceManager.getInstance().getBaseName(
+                                theFile.getPath()));
+                name = pm.fixXmiExtension(name);
+                theFile = new File(theFile.getParent(), name);
+                ProjectBrowser.getInstance().trySaveWithProgressMonitor(
+                        false, theFile, false);
+            }
+        }
+        
+        Converter tmpconverter = new Converter();
+        tmpconverter.httpConn(theFile);
+    }
+    
+    
     private void initModulesMenus() {
         for (JMenu menu : moduleMenus) {
             add(menu);
