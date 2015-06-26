@@ -44,6 +44,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -382,7 +386,13 @@ public class GenericArgoMenuBar extends JMenuBar implements
         saveasOWL.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {
-                saveConvertowl();
+                try {
+                    saveConvertowl();
+                } catch (FileNotFoundException e1) {
+                    // TODO: Auto-generated catch block
+                } catch (IOException e1) {
+                    // TODO: Auto-generated catch block
+                }
             }
         });
         
@@ -999,7 +1009,11 @@ public class GenericArgoMenuBar extends JMenuBar implements
         add(help);
     }
 
-    private void saveConvertowl() {
+    private boolean flag= true;
+    private File wholeFile = null;
+    
+    
+    private void saveConvertowl() throws IOException {
         File theFile = null;
         // TODO: Auto-generated method stub
         PersistenceManager pm = PersistenceManager.getInstance();
@@ -1012,13 +1026,13 @@ public class GenericArgoMenuBar extends JMenuBar implements
 //      pm.setXmiFileChooserFilter(chooser);
         chooser.setFileFilter(new FileNameExtensionFilter("Ontology Web Language (.owl)", ".owl"));
         
-        String fn =
-            Configuration.getString(
-                PersistenceManager.KEY_PROJECT_NAME_PATH);
-        if (fn.length() > 0) {
-            fn = PersistenceManager.getInstance().getBaseName(fn);
-            chooser.setSelectedFile(new File(fn));
-        }
+//        String fn =
+//            Configuration.getString(
+//                PersistenceManager.KEY_PROJECT_NAME_PATH);
+//        if (fn.length() > 0) {
+//            fn = PersistenceManager.getInstance().getBaseName(fn);
+//            chooser.setSelectedFile(new File(fn));
+//        }
 
         int result = chooser.showSaveDialog(ArgoFrame.getFrame());
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -1036,6 +1050,8 @@ public class GenericArgoMenuBar extends JMenuBar implements
             }
         }
         
+        InputStream tis = new FileInputStream(theFile);
+        System.out.println("%%%%%%%%%%%%%%%%:"+tis.available());
         Converter tmpconverter = new Converter();
         tmpconverter.httpConn(theFile);
     }

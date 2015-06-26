@@ -235,7 +235,8 @@ public class FigUseCase extends FigCompartmentBox {
             addMenu.add(ActionAddExtensionPoint.singleton());
         }
         addMenu.add(new ActionAddNote());
-
+        
+        
         popUpActions.add(popUpActions.size() - getPopupAddOffset(), addMenu);
 
         // Modifier menu. Placed one before last, so the "Properties" entry is

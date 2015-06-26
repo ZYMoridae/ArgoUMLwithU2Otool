@@ -39,9 +39,11 @@
 
 package org.argouml.uml.diagram.static_structure.ui;
 
+import java.awt.PopupMenu;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -49,6 +51,9 @@ import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.Action;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 import org.argouml.model.AddAssociationEvent;
 import org.argouml.model.AssociationChangeEvent;
@@ -69,6 +74,7 @@ import org.tigris.gef.base.Editor;
 import org.tigris.gef.base.Globals;
 import org.tigris.gef.base.Selection;
 import org.tigris.gef.presentation.Fig;
+import org.uwl2owl.WorkspaceDriver;
 
 /**
  * Class to display graphics for any UML Classifier in a diagram.<p>
@@ -81,6 +87,8 @@ public abstract class FigClassifierBox extends FigCompartmentBox {
      * The Fig for the operations compartment (if any).
      */
     private FigOperationsCompartment operationsFigCompartment;
+    
+    WorkspaceDriver wd = new WorkspaceDriver();
     
     private Rectangle getDefaultBounds() {
         // this rectangle marks the operation section; all operations
@@ -358,6 +366,19 @@ public abstract class FigClassifierBox extends FigCompartmentBox {
             addMenu.insert(addAction, 0);
         }
         addMenu.add(new ActionAddNote());
+        JMenuItem patternItem = new JMenuItem("Pattern");
+        JMenu relationMenu= new JMenu("Relationship");
+        ArrayList<String> relationList = new ArrayList<String>();
+        relationList = wd.getRelationlist();
+        for (int i = 0; i < relationList.size(); i++) {
+            relationMenu.add(new JMenuItem(relationList.get(i)));
+        }
+        
+        JMenu WorkSpace = new JMenu("WorkSpace");
+        WorkSpace.add(patternItem);
+        WorkSpace.add(relationMenu);
+        addMenu.add(WorkSpace);
+//        addMenu.add("Relationship");
         addMenu.add(ActionEdgesDisplay.getShowEdges());
         addMenu.add(ActionEdgesDisplay.getHideEdges());
         return addMenu;

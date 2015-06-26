@@ -51,10 +51,11 @@ public class Converter {
             System.out.println(tmpfile.getName()+"*************");
 //            InputStream umlFile = getClass().getResourceAsStream("/"+tmpfile);
             
-            InputStream umlFile = new FileInputStream(new File(tmpfile.getAbsolutePath()));
+//            InputStream umlFile = new FileInputStream(new File(tmpfile.getAbsolutePath()));
+            InputStream umlFile = new FileInputStream(tmpfile);
             
 //            InputStream umlFile = getClass().getResourceAsStream("/org.xmi");
-            
+            System.out.println(umlFile.available());
             
             byte[] imgData = new byte[umlFile.available()];
             umlFile.read(imgData);

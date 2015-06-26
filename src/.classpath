@@ -52,5 +52,8 @@
 	<classpathentry kind="lib" path="/Users/alex/Downloads/argouml-0.35.1/saxon9.jar"/>
 	<classpathentry kind="lib" path="/Users/alex/Downloads/argouml-0.35.1/swidgets-0.1.4.jar"/>
 	<classpathentry kind="lib" path="/Users/alex/Downloads/argouml-0.35.1/toolbar-1.4.1-20071227.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Documents/DesignWorkspaceLibrary.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Downloads/jersey-client.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Downloads/com.sun.jersey.jersey-core-1.4.0.jar"/>
 	<classpathentry kind="output" path="build-eclipse"/>
 </classpath>

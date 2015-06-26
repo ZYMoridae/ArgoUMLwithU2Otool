@@ -93,6 +93,7 @@ public class ActionAddNote extends UndoableAction {
                 Translator.localize("action.new-comment"));
         putValue(Action.SMALL_ICON, ResourceLoaderWrapper
                 .lookupIconResource("New Note"));
+        
     }
 
 
