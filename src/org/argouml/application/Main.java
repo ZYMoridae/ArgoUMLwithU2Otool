@@ -149,6 +149,8 @@ public class Main {
      * @param args command line parameters
      */
     public static void main(String[] args) {
+        
+                
         try {
             LOG.log(Level.INFO, "ArgoUML Started.");
 
