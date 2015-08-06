@@ -16,21 +16,24 @@ import java.net.URL;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.filechooser.FileFilter;
 
 import org.argouml.configuration.Configuration;
 import org.argouml.i18n.Translator;
 import org.argouml.kernel.Project;
 import org.argouml.kernel.ProjectManager;
-import org.argouml.persistence.AbstractFilePersister;
 import org.argouml.persistence.PersistenceManager;
 import org.argouml.persistence.ProjectFileView;
 import org.argouml.ui.ProjectBrowser;
-import org.argouml.util.ArgoFrame;
+
+/*
+ * This class is for converting uml to owl
+ * 
+ * Joe 
+ * 3 Aug 2015
+ */
 
 @SuppressWarnings("javadoc")
 public class Converter {
@@ -47,14 +50,10 @@ public class Converter {
             conn = url.openConnection();
             conn.setDoOutput(true);
             
-            System.out.println("###!@#!@#!@#!@#!@#!@#!@#!@#!@#");
-            System.out.println(tmpfile.getName()+"*************");
-//            InputStream umlFile = getClass().getResourceAsStream("/"+tmpfile);
+            System.out.println(tmpfile.getName()+"*******************************************************");
             
-//            InputStream umlFile = new FileInputStream(new File(tmpfile.getAbsolutePath()));
-            InputStream umlFile = new FileInputStream(tmpfile);
-            
-//            InputStream umlFile = getClass().getResourceAsStream("/org.xmi");
+            InputStream umlFile = new FileInputStream(new File(tmpfile.getAbsolutePath()));
+            System.out.println(tmpfile.getAbsolutePath());
             System.out.println(umlFile.available());
             
             byte[] imgData = new byte[umlFile.available()];
@@ -62,8 +61,7 @@ public class Converter {
 
             String message1 = "";
             message1 += "-----------------------------4664151417711" + CrLf;
-            message1 += "Content-Disposition: form-data; name=\"xmi_file\"; filename=\"org.xmi\""
-                    + CrLf;
+            message1 += "Content-Disposition: form-data; name=\"xmi_file\"; filename=\""+tmpfile.getName()+"\"" + CrLf;
             message1 += "Content-Type: file/xmi" + CrLf;
             message1 += CrLf;
 
@@ -119,7 +117,6 @@ public class Converter {
             int len;
             byte[] data = new byte[buff];
             do {
-//                System.out.println("READ");
                 len = is.read(data);
 
                 if (len > 0) {
@@ -153,10 +150,10 @@ public class Converter {
         
         try
 		{
-			String path = "/Users/alex/Documents/ArgoUMLv2.0/ArgoUMLwithU2Otool/src/";
-			@SuppressWarnings("unused")
-                        Process proc = Runtime.getRuntime().exec("java -jar "+path+"uml2owl.jar verbose=true IRI=http://www.tuwien.ac.at/out.owl converter=VisualParadigmConverterXMI2  input="+path+"result2.xmi output="+path+"result2.owl" 
-			);
+			String workingDir = System.getProperty("user.dir");
+			System.out.println("###########Current Path Equals to:    "+workingDir);
+                        Process proc = Runtime.getRuntime().exec("java -jar "+workingDir+"/uml2owl.jar verbose=true IRI=http://www.tuwien.ac.at/out.owl converter=VisualParadigmConverterXMI2  input="+workingDir+"/result2.xmi output="+workingDir+"/test2.owl" 
+                        );
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
@@ -168,11 +165,8 @@ public class Converter {
         
         File theFile = null;
         
-        // Most of this code originates from ActionOpenProject.
         ProjectBrowser pb = ProjectBrowser.getInstance();
         Project p = ProjectManager.getManager().getCurrentProject();
-//        PersistenceManager pm = PersistenceManager.getInstance();
-
         if (!ProjectBrowser.getInstance().askConfirmationAndSave()) {
             return null;
         }
@@ -198,8 +192,6 @@ public class Converter {
 
         chooser.setAcceptAllFileFilterUsed(false);
 
-//        pm.setXmiFileChooserFilter(chooser);
-
         String fn =
             Configuration.getString(
                 PersistenceManager.KEY_IMPORT_XMI_PATH);
@@ -211,26 +203,6 @@ public class Converter {
         if (retval == JFileChooser.APPROVE_OPTION) {
             theFile = chooser.getSelectedFile();
 
-//            if (!theFile.canRead()) {
-//                /* Try adding the extension from the chosen filter. */
-//                FileFilter ffilter = chooser.getFileFilter();
-//                if (ffilter instanceof AbstractFilePersister) {
-//                    AbstractFilePersister afp =
-//                        (AbstractFilePersister) ffilter;
-//                    File m =
-//                        new File(theFile.getPath() + "."
-//                                + afp.getExtension());
-//                    if (m.canRead()) {
-//                        theFile = m;
-//                    }
-//                }
-//            }
-//            Configuration.setString(
-//                    PersistenceManager.KEY_IMPORT_XMI_PATH,
-//                    theFile.getPath());
-//
-//            ProjectBrowser.getInstance().loadProjectWithProgressMonitor(
-//                    theFile, true);
         }
         return theFile;
     }
@@ -255,9 +227,6 @@ public class Converter {
                 
             }
         });
-        
-//        saveButton = new JButton("Save a File...");
-//        saveButton.addActionListener(this);
         
         JPanel buttonPanel = new JPanel(); //use FlowLayout
         buttonPanel.add(openButton);

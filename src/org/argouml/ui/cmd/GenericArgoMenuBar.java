@@ -113,6 +113,7 @@ import org.tigris.gef.base.AlignAction;
 import org.tigris.gef.base.DistributeAction;
 import org.tigris.gef.base.ReorderAction;
 import org.tigris.toolbar.ToolBarFactory;
+import org.uwl2owl.ActionExportOWL;
 import org.uwl2owl.Converter;
 
 /**
@@ -381,20 +382,13 @@ public class GenericArgoMenuBar extends JMenuBar implements
         ShortcutMgr.assignAccelerator(file.add(new ActionExportXMI()),
                 ShortcutMgr.ACTION_EXPORT_XMI);
         
-        JMenuItem saveasOWL = new JMenuItem("Export OWL...");
-        file.add(saveasOWL);
-        saveasOWL.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    saveConvertowl();
-                } catch (FileNotFoundException e1) {
-                    // TODO: Auto-generated catch block
-                } catch (IOException e1) {
-                    // TODO: Auto-generated catch block
-                }
-            }
-        });
+/*
+ * Start Joe 2015 
+ */
+        file.add(new ActionExportOWL());
+/*
+ * End Joe
+ */
         
         JMenuItem importFromSources = file.add(ActionImportFromSources
                 .getInstance());
@@ -955,7 +949,7 @@ public class GenericArgoMenuBar extends JMenuBar implements
         tools = new JMenu(menuLocalize("Tools"));
         setMnemonic(tools, "Tools");
         
-//        JMenuItem umlVersionConvertion = tools.add(new JMenuItem("UML Version Converter"));
+        //Add by Joe
         JMenuItem umlToOwl= tools.add(new JMenuItem("Convert to OWL"));
         umlToOwl.addActionListener(new ActionListener() {
             

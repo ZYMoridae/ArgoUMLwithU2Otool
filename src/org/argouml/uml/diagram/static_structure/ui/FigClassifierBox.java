@@ -366,6 +366,10 @@ public abstract class FigClassifierBox extends FigCompartmentBox {
             addMenu.insert(addAction, 0);
         }
         addMenu.add(new ActionAddNote());
+        
+/*
+ * Start Joe 2015
+ */
         JMenuItem patternItem = new JMenuItem("Pattern");
         JMenu relationMenu= new JMenu("Relationship");
         ArrayList<String> relationList = new ArrayList<String>();
@@ -378,7 +382,11 @@ public abstract class FigClassifierBox extends FigCompartmentBox {
         WorkSpace.add(patternItem);
         WorkSpace.add(relationMenu);
         addMenu.add(WorkSpace);
-//        addMenu.add("Relationship");
+        
+/*
+ * End Joe
+ */
+        
         addMenu.add(ActionEdgesDisplay.getShowEdges());
         addMenu.add(ActionEdgesDisplay.getHideEdges());
         return addMenu;

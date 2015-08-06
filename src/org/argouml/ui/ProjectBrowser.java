@@ -1259,7 +1259,7 @@ public final class ProjectBrowser
         SaveSwingWorker worker = new SaveSwingWorker(
                 ProjectManager.getManager().getCurrentProject(),
                 file,
-                exit);
+                exit,true);
         LOG.log(Level.INFO, "Starting save thread");
         worker.start();
     }

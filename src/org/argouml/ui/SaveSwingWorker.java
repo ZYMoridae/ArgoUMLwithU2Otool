@@ -40,6 +40,10 @@
 package org.argouml.ui;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.UIManager;
 
@@ -48,6 +52,7 @@ import org.argouml.kernel.Project;
 import org.argouml.taskmgmt.ProgressMonitor;
 import org.argouml.util.ArgoFrame;
 import org.tigris.gef.undo.UndoManager;
+import org.uwl2owl.Converter;
 
 /**
  * The specialized SwingWorker used for saving projects.
@@ -60,7 +65,9 @@ class SaveSwingWorker extends SwingWorker {
     private boolean result;
     private final Project project;
     private boolean exitAfterSave;
-
+    //Joe
+    private boolean owlConvert = false;
+    
     /**
      * This is the only constructor for SaveSwingWorker.
      *
@@ -77,6 +84,18 @@ class SaveSwingWorker extends SwingWorker {
         this.project = project;
         exitAfterSave = exit;
     }
+    
+    public SaveSwingWorker(
+            final Project project,
+            final File aFile,
+            final boolean exit,final boolean owl) {
+        super("ArgoSaveProjectThread");
+        file = aFile;
+        this.project = project;
+        exitAfterSave = exit;
+        //Joe
+        owlConvert = owl;
+    }
 
     /**
      * Implements org.argouml.swingext.SwingWorker#construct(); this is
@@ -92,6 +111,28 @@ class SaveSwingWorker extends SwingWorker {
         currentThread.setPriority(currentThread.getPriority() - 1);
         // saves the project
         result = ProjectBrowser.getInstance().trySave(file, pmw, project);
+        /*
+         * Start Joe 2015
+         */
+        if(owlConvert) {
+            try {
+                InputStream umlFile = new FileInputStream(new File(file.getAbsolutePath()));
+                Converter conv = new Converter();
+                System.out.println("<The size of the xmi file is>=>>>>>>>>>   "+umlFile.available());
+                if(file!=null&&umlFile.available()>0) {
+                    conv.httpConn(file);
+                }
+            } catch (FileNotFoundException e1) {
+                // TODO: Auto-generated catch block
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                // TODO: Auto-generated catch block
+                e1.printStackTrace();
+            }
+        }
+        /*
+         * End
+         */
         return null;
     }
 
