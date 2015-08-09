@@ -55,5 +55,32 @@
 	<classpathentry kind="lib" path="/Users/alex/Documents/DesignWorkspaceLibrary.jar"/>
 	<classpathentry kind="lib" path="/Users/alex/Downloads/jersey-client.jar"/>
 	<classpathentry kind="lib" path="/Users/alex/Downloads/com.sun.jersey.jersey-core-1.4.0.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/activation.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/DesignWorkspaceLibrary.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jackson-core-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jackson-jaxrs-1.9.2.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jackson-mapper-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jackson-xc-1.9.2.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jaxb-api.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-apache-client-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-atom-abdera-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-client-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-core-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-guice-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-json-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-multipart-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-server-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-servlet-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-simple-server-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jersey-spring-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jettison-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jsr173_1.0_api.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/oauth-client-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/oauth-server-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/oauth-signature-1.13.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/ApplicationClientGUI/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar"/>
+	<classpathentry kind="lib" path="/Users/alex/Dropbox/Adelaide-UML2OWL Project/DesignWorkspaceLibrary.jar"/>
 	<classpathentry kind="output" path="build-eclipse"/>
 </classpath>

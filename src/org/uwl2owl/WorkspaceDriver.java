@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.swing.JComboBox;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.handler.MessageContext;
 
@@ -83,7 +84,27 @@ public class WorkspaceDriver {
     public ArrayList<String> getRelationlist(){
         
         ArrayList<String> relationList = (ArrayList) port.getRelationList(Constants.workspaceIdentifier);
-        
+       
         return relationList;
+    }
+    
+    public JComboBox<ComboItem> getParentList(){
+        JComboBox<ComboItem> jComboBoxParentConcept= null;
+        Concept parentConcept = new Concept();
+        parentConcept.setName(Constants.knowledgeIdentifier);
+        parentConcept.setDisplayName(Constants.knowledgeIdentifier);
+        ArrayList<Concept> parentConceptList = (ArrayList) port.getConceptListOfParents("DesignWorkspace", Constants.knowledgeIdentifier, parentConcept);
+        if( parentConceptList != null )
+        {
+            for( int i = 0 ; i < parentConceptList.size() ; i++ )
+            {
+                Concept tempConcept = parentConceptList.get(i);
+                if( tempConcept != null )
+                {
+                    jComboBoxParentConcept.addItem(new ComboItem(tempConcept.getName(),tempConcept.getDisplayName()));
+                }
+            }
+        }
+        return jComboBoxParentConcept;
     }
 }
